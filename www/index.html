@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval';">
+    
+    <link href="lib/mobiscroll/mobiscroll.custom-2.6.2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
+    <link href="css/gesol-icons-embedded.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/jquery.mask.min.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+
+    <script src="lib/mobiscroll/mobiscroll.custom-2.6.2.min.js" type="text/javascript"></script>
+    
+    <title>Fala Campo Grande</title>
+</head>
+<body >
+    <!--------------------------------------- MENU --------------------------------------->
+    <ons-splitter>
+        <ons-splitter-side id="menu" side="left" width="300px" collapse>
+            <ons-page>
+                <ons-row class="menu-header">
+                    <ons-col width="100%">
+                        <img src="images/HEADER-MENU.png" width="100%">
+                    </ons-col>
+                </ons-row>
+                <ons-list id="menu-list">
+                    <ons-list-header>Navegação</ons-list-header>
+                    <ons-list-item class="menu-item" onclick="fn.load('home.html')" tappable><ons-icon icon="home"></ons-icon>&nbsp;Home</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="fn.load('educacao.html');" tappable><ons-icon icon="graduation-cap"></ons-icon>&nbsp;Educação</ons-list-item>
+                    <ons-list-item class="menu-item" style="padding-left: 15px;" onclick="fn.load('defesa-social.html')" tappable><i class="fa icon-cap"></i>&nbsp;Defesa Social</ons-list-item>
+                    <ons-list-item class="menu-item" style="padding-left: 15px;" onclick="fn.load('obras-servicos.html')" tappable><i class="fa icon-worker"></i>&nbsp;Obras e Serviços</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="fn.load('ouvidoria.html')" tappable><ons-icon icon="volume-control-phone"></ons-icon>&nbsp;Ouvidoria</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="fn.load('saude.html')" tappable><ons-icon icon="user-md" tappable></ons-icon>&nbsp;Saúde</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="window.open(encodeURI('http://transparencia.campogrande.ms.gov.br'), '_system', 'location=no');" tappable><ons-icon icon="search"></ons-icon>&nbsp;Transparência</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="fn.load('transporte-coletivo.html')" tappable><ons-icon icon="bus"></ons-icon>&nbsp;Transporte Coletivo</ons-list-item>
+                    <ons-list-header>Solicitações</ons-list-header>
+                    <ons-list-item class="menu-item" onclick="fn.load('minhas-solicitacoes-2.html')" tappable><ons-icon icon="ion-clipboard"></ons-icon>&nbsp;Meus Protocolos</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="fn.load('solicitacoes-procon.html')" tappable><ons-icon icon="ion-clipboard"></ons-icon>&nbsp;Meus Protocolos - PROCON</ons-list-item>
+                    <ons-list-header>Notificações</ons-list-header>
+                    <ons-list-item class="menu-item" onclick="fn.load('minhas-notificacoes.html')" tappable><ons-icon icon="fa-bell-o"></ons-icon>&nbsp;Minhas Notificações&nbsp;<span id="spanQtdeNotificacao" class="badge">0</span></ons-list-item>
+                    <ons-list-header>Configurações</ons-list-header>
+                    <ons-list-item class="menu-item" onclick="fn.load('perfil.html')"><ons-icon icon="user" tappable></ons-icon>&nbsp;Perfil</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="fn.load('sobre.html')" tappable><ons-icon icon="question"></ons-icon>&nbsp;Sobre</ons-list-item>
+                    <ons-list-item class="menu-item" onclick="logout()"><ons-icon icon="sign-out" tappable></ons-icon>&nbsp;Sair</ons-list-item>
+                </ons-list>
+                <ons-row class="menu-header" style="padding: 8px;">
+                    <ons-col width="100%">
+                        <img src="images/logo_cg.png" width="100%">
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-splitter-side>
+        <ons-splitter-content> 
+            <ons-navigator id="myNavigator" page="tela-inicial.html"></ons-navigator>
+        </ons-splitter-content>
+    </ons-splitter>
+    <!--------------------------------------- MENU --------------------------------------->
+    <!--------------------------------------- MINHAS SOLICITAÇÕES --------------------------------------->
+    <ons-template id="minhas-solicitacoes-2.html">
+        <ons-page id="minhas-solicitacoes-2" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Meus Protocolos</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3>
+                            <i class="ion-clipboard"></i> Meus Protocolos<br>
+                            <small>Toque para acompanhar.</small>
+                        </h3>
+                    </div>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Protocolos</ons-list-header>
+                    </ons-list>
+                    <div id="divSolicitacoes"></div>                    
+                </ons-col>
+            </ons-row>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol" style="font-size: 90%">
+                        <ons-list-header style="height:30px !important; padding-top:5px; padding-bottom:3px;">
+                            <span style=" float:left;">
+                                Legenda
+                            </span>
+                            <span onclick="fn.load('details.html')" style="float:right" tappable>
+                                <ons-icon icon="ion-ios-information-outline">
+                                </ons-icon>&nbsp;
+                                Detalhes  
+                            </span>
+                        </ons-list-header>
+                        <ons-list-item>
+                            <p style="margin: 5px; padding-left: 12px;">
+                                <img src='./images/aberta.png' style='width: 7%; vertical-align: middle;' /><span style="margin-right: 47px;">&nbsp;Aberta</span>
+                                <img src='./images/gerenciada.png' style='width: 7%; vertical-align: middle;' /><span>&nbsp;Em Análise</span>
+                            </p>
+                            <p style="margin: 5px; padding-left: 12px;">
+                                <img src='./images/finalizada.png' style='width: 7%; vertical-align: middle;' /><span style="margin-right: 23px;">&nbsp;Finalizada</span>
+                                <img src='./images/concluida.png' style='width: 7%; vertical-align: middle;' /><span>&nbsp;Concluída</span>
+                            </p>
+                        </ons-list-item>    
+                    </ons-list>
+                </ons-col>
+            </ons-row>
+            <ons-row class="main-wrapper" style="padding-top: 0px;">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3 style="margin-top: 0px;">
+                            <small>Obrigado por contribuir e ajudar a melhorar a nossa cidade!</small>
+                        </h3>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- MINHAS SOLICITAÇÕES --------------------------------------->
+     <!------------------------------------------ LEGENDAS ----------------------------------------------->
+    <!------------------------------------WANDER-ARCE - task:#7656 --------------------------------------> 
+     <ons-template id="details.html">
+        <ons-page id="details" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Legenda</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Legenda Detalhada
+                        </ons-list-header>
+                    </ons-list>
+                    <div id="divSolicitacoes">
+                        <button class='accordion-button' onclick='toggleAccordion(this)'>
+                            <img src='./images/aberta.png' style='vertical-align: bottom; width: 6%' />&nbsp;
+                            <span style='vertical-align: sub;'>Aberta </span>    
+                        </button>
+                        <div class='painel'>     
+                            <p>
+                                <span style='font-weight: bold; text-align:justify;'>
+                                    Protocolos recebidos, mas ainda não tramitados internamente.
+                                </span>
+                            </p>
+                        </div>
+                        
+                        <button class='accordion-button' onclick='toggleAccordion(this)'>
+                            <img src='./images/gerenciada.png' style='vertical-align: bottom; width: 6%' />&nbsp;
+                            <span style='vertical-align: sub;'>Em Análise </span>    
+                        </button>
+                        <div class='painel'>     
+                            <p>
+                                <span style='font-weight: bold;text-align:justify;'>
+                                    Protocolos já tramitados internamente, aguardando alguma solução de um Setor ou a execução da Solicitação.
+                                </span>
+                            </p>
+                        </div>
+                        
+                         <button class='accordion-button' onclick='toggleAccordion(this)'>
+                            <img src='./images/concluida.png' style='vertical-align: bottom; width: 6%' />&nbsp;
+                            <span style='vertical-align: sub;'>Concluída </span>    
+                        </button>
+                        <div class='painel'>     
+                            <p>
+                                <span style='font-weight: bold; text-align:justify;'>
+                                    Protocolos no estágio final, com sua solicitação atendida.
+                                </span>
+                            </p>
+                        </div>
+                         <button class='accordion-button' onclick='toggleAccordion(this)'>
+                            <img src='./images/finalizada.png' style='vertical-align: bottom; width: 6%' />&nbsp;
+                            <span style='vertical-align: sub;'>Finalizada </span>    
+                        </button>
+                        <div class='painel'>     
+                            <p>
+                                <span style='font-weight: bold; text-align:justify;'>
+                                    Protocolos no estágio final, com sua solicitação rejeitada.
+                                </span>
+                            </p>
+                        </div>
+                    
+                    </div>                    
+                </ons-col>
+                
+                
+
+            </ons-row>
+            
+            <ons-row class="main-wrapper" style="padding-top: 0px;">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3 style="margin-top: 0px;">
+                            <small>Obrigado por contribuir e ajudar a melhorar a nossa cidade!</small>
+                        </h3>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    
+    <!------------------------------------------ LEGENDAS ----------------------------------------------->
+    <!--------------------------------------- MINHAS NOTIFICAÇÕES --------------------------------------->
+    <ons-template id="minhas-notificacoes.html">
+        <ons-page id="minhas-notificacoes" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Minhas Notificações</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3>
+                            <i class="fa fa-bell-o"></i> Minhas Notificações<br>
+                            <small>Toque para acompanhar.</small>
+                        </h3>
+                    </div>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Notificações Recebidas</ons-list-header>
+                    </ons-list>
+                    <div id="divNotificacoes"></div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- MINHAS NOTIFICAÇÕES --------------------------------------->
+    <!--------------------------------------- AVALIAR SERVIÇO --------------------------------------->
+    <ons-template id="avaliar-servico.html">
+        <ons-page id="avaliar-servico">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Avaliar Serviço</div>
+            </ons-toolbar>
+            <p style="margin-left: 10px; margin-bottom: 0;">
+                <label>Diversidade dos serviços</label>
+                <div class="stars">
+                    <input class="star star-5" id="diversidade-servico-5" type="radio" name="diversidade-servico" />
+                    <label class="star star-5" for="diversidade-servico-5"></label>
+                    <input class="star star-4" id="diversidade-servico-4" type="radio" name="diversidade-servico" />
+                    <label class="star star-4" for="diversidade-servico-4"></label>
+                    <input class="star star-3" id="diversidade-servico-3" type="radio" name="diversidade-servico" />
+                    <label class="star star-3" for="diversidade-servico-3"></label>
+                    <input class="star star-2" id="diversidade-servico-2" type="radio" name="diversidade-servico" />
+                    <label class="star star-2" for="diversidade-servico-2"></label>
+                    <input class="star star-1" id="diversidade-servico-1" type="radio" name="diversidade-servico" />
+                    <label class="star star-1" for="diversidade-servico-1"></label>
+                </div>
+            </p>
+            <p style="margin-left: 10px; margin-bottom: 0;">
+                <label>Qualidade das notificações</label>
+                <div class="stars">
+                    <input class="star star-5" id="qualidade-notificacao-5" type="radio" name="qualidade-notificacao" />
+                    <label class="star star-5" for="qualidade-notificacao-5"></label>
+                    <input class="star star-4" id="qualidade-notificacao-4" type="radio" name="qualidade-notificacao" />
+                    <label class="star star-4" for="qualidade-notificacao-4"></label>
+                    <input class="star star-3" id="qualidade-notificacao-3" type="radio" name="qualidade-notificacao" />
+                    <label class="star star-3" for="qualidade-notificacao-3"></label>
+                    <input class="star star-2" id="qualidade-notificacao-2" type="radio" name="qualidade-notificacao" />
+                    <label class="star star-2" for="qualidade-notificacao-2"></label>
+                    <input class="star star-1" id="qualidade-notificacao-1" type="radio" name="qualidade-notificacao" />
+                    <label class="star star-1" for="qualidade-notificacao-1"></label>
+                </div>
+            </p>
+            <p style="margin-left: 10px;">
+                <label>Atendimento das solicitações</label>
+                <div class="stars">
+                    <input class="star star-5" id="atendimento-solicitacao-5" type="radio" name="atendimento-solicitacao" />
+                    <label class="star star-5" for="atendimento-solicitacao-5"></label>
+                    <input class="star star-4" id="atendimento-solicitacao-4" type="radio" name="atendimento-solicitacao" />
+                    <label class="star star-4" for="atendimento-solicitacao-4"></label>
+                    <input class="star star-3" id="atendimento-solicitacao-3" type="radio" name="atendimento-solicitacao" />
+                    <label class="star star-3" for="atendimento-solicitacao-3"></label>
+                    <input class="star star-2" id="atendimento-solicitacao-2" type="radio" name="atendimento-solicitacao" />
+                    <label class="star star-2" for="atendimento-solicitacao-2"></label>
+                    <input class="star star-1" id="atendimento-solicitacao-1" type="radio" name="atendimento-solicitacao" />
+                    <label class="star star-1" for="atendimento-solicitacao-1"></label>
+                </div>
+            </p>
+            <br /><br />
+            <div style="text-align: center; margin:10px">
+                <ons-button modifier="large" onclick="enviarAvaliacao();">Enviar</ons-button>
+            </div>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- AVALIAR SERVIÇO --------------------------------------->
+    <!--------------------------------------- SOBRE O APLICATIVO --------------------------------------->
+    <ons-template id="sobre.html"> 
+        <ons-page id="sobre" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Sobre</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-item>
+                            <p style="margin: 0; padding-right: 10px; padding-top: 10px">
+                                <img src="images/logo_cg.png" style="width: 100%"/>
+                            </p>
+                        </ons-list-item>
+                        <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('termo-uso.html');" tappable>Termo de Uso</ons-list-item>
+                        <ons-list-item>
+                            <span>Versão do Aplicativo: 1.1.9</span>
+                        </ons-list-item>
+                        <ons-list-item>
+                            <span>Desenvolvido por:</span>
+                            <p style="margin: 0; padding-right: 10px; padding-top: 10px">
+                                AGETEC - Agência Municipal de Tecnologia da Informação e Inovação
+                            </p>
+                        </ons-list-item>
+                    </ons-list>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- SOBRE O APLICATIVO --------------------------------------->
+    <!--------------------------------------- TERMO DE USO --------------------------------------->
+    <ons-template id="termo-uso.html">
+        <ons-page id="termo-uso" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Termo de Uso</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-item modifier='nodivider'>
+                            <p class="paragrafo-termo"><b>FAVOR LER COM ATENÇÃO ESTES TERMOS DE USO ANTES DE ACESSAR OU USAR O APLICATIVO</b></p>
+                            <p class="paragrafo-termo">Seja bem-vindo ao “Aplicativo de Atendimento FALA CAMPO GRANDE”, um aplicativo idealizado pela Prefeitura Municipal de Campo Grande (PMCG), no qual os cidadãos e cidadãs campo-grandenses fazem solicitações de serviço, fiscalização, denuncias, elogios, reclamações e sugestões a Prefeitura. O presente acordo e o contrato entre APLICATIVO FALA CAMPO GRANDE e você, munícipe e usuário.</p>
+                            <p class="paragrafo-termo">Ao baixar o aplicativo ou fazer o cadastro, você concorda, irrestritamente, em aceitar os termos e as condições de uso indicadas a seguir, na medida em que as disposições constantes vinculam o usuário do Aplicativo de Atendimento FALA CAMPO GRANDE e protegem o próprio aplicativo e a PMCG, em conformidade com as Leis Federais n. 9609/1998 e 9279/1996. Além destes termos, esta dinâmica também é regulada pela Política de Privacidade.</p>
+                            
+                            <p class="paragrafo-termo"><b>1. COMPROMISSO COM OS TERMOS DE USO</b></p>
+                            <p class="paragrafo-termo">1.1 Em fazendo uso das informações, dos recursos e das funcionalidades do Aplicativo de Atendimento FALA CAMPO GRANDE, o munícipe concorda com os termos aqui expressos. Por favor, verifique todos os termos com cuidado antes de fazer uso de nosso aplicativo, pois, ao utiliza-lo, você concorda em segui-los.</p>
+                            <p class="paragrafo-termo">1.2 Se não concordar com todos os termos do Aplicativo FALA CAMPO GRANDE, não será possível que você utilize os serviços oferecidos no aplicativo. No entanto, a prefeitura oferece outros canais de atendimento proporcionando os mesmos serviços do APLICATIVO FALA CAMPO GRANDE, e outros, a Central de Atendimento 156 e as praças de atendimento da prefeitura.</p>
+                            <p class="paragrafo-termo">1.3 O uso do aplicativo após a mudança nos Termos de Uso será considerado como uma concordância tácita do contrato. Se você discordar das nos Termos de Uso, será necessário que cancele a conta e utilize os outros canais de atendimento da PMCG (ver termo 1.2).</p>
+
+                            <p class="paragrafo-termo"><b>2. FORMAS DE NAVEGAÇÃO</b></p>
+                            <p class="paragrafo-termo">2.1 O acesso ao APLICATIVO FALA CAMPO GRANDE, é permitido em dispositivos moveis.</p>
+                            <p class="paragrafo-termo">2.2 A utilização dos serviços do APLICATIVO FALA CAMPO GRANDE funciona de duas maneiras:</p>
+                            <p class="paragrafo-termo">2.2.1 O usuário pode realizar o cadastro eletrônico, criar sua conta e fornecer seus dados pessoais, além de escolher uma senha de acesso; ou</p>
+                            <p class="paragrafo-termo">2.2.2 O usuário pode acessar anonimamente, tendo então, acesso restrito aos serviços nos quais o cadastro anônimo é permitido (ver termo 4.5).</p>
+
+                            <p class="paragrafo-termo"><b>3. CADASTRAMENTO</b></p>
+                            <p class="paragrafo-termo">3.1 Para realização do cadastro, o usuário deve fornecer os seguintes dados: nome, CPF, e-mail, data de nascimento e endereço.</p>
+
+                            <p class="paragrafo-termo"><b>4. NOTIFICAÇÕES</b></p>
+                            <p class="paragrafo-termo">4.1 Ao concordar com estes Termos de Uso, você autoriza o aplicativo de atendimento a realizar o envio de atualizações do ciclo de vida de suas solicitações, alertas de interesse público, ou avisos administrativos aos usuários. Se desejar você pode desativar o envio dessas notificações.</p>
+
+                            <p class="paragrafo-termo"><b>5. RESPONSABILIDADES DO USUÁRIO</b></p>
+                            <p class="paragrafo-termo">5.1 Os serviços do APLICATIVO FALA CAMPO GRANDE não devem ser utilizados indevidamente. É apenas permitido ao usuário do aplicativo fazer uso do que lhe é disponibilizado, e dentro das normas previstas legalmente no Brasil.</p>
+                            <p class="paragrafo-termo">5.2 A comercialização desse aplicativo e expressamente proibida. Ao concordar com estes Termos de Uso e utilizar o APLICATIVO FALA CAMPO GRANDE, o usuário recebera um permissionamento do proprietário para uso não comercial dos serviços oferecidos pelo APLICATIVO FALA CAMPO GRANDE, o que, em nenhuma hipótese, fará dele proprietário do APLICATIVO FALA CAMPO GRANDE.</p>
+                            <p class="paragrafo-termo">5.3 Você é responsável por toda a qualquer ação feita em sua conta, e você concorda em não alienar, ceder ou transferir a sua conta, nome e dados de usuário, ou quaisquer direitos a outra pessoa.</p>
+                            <p class="paragrafo-termo">5.4 Ademais, você declara que todas as informações fornecidas ao APLICATIVO FALA CAMPO GRANDE são verdadeiras, exatas, atuais e completas, pois é uma obrigação do usuário atualiza-las para manter a veracidade e a exatidão das informações.</p>
+                            <p class="paragrafo-termo">5.5 Da mesma forma, você declara utilizar os serviços disponíveis no APLICATIVO FALA CAMPO GRANDE de maneira responsável, dado que se trata de um aplicativo público que cuida da prestação de serviços essenciais para a cidade de Campo Grande.</p>
+                            <p class="paragrafo-termo">5.6 Você não deve perseguir, abusar, intimidar, assediar ou ameaçar pessoas ou entidades. Também não deve compartilhar informações particulares ou confidenciais, incluindo, entre outras, informações de cartões de credito, por exemplo. Você não pode utilizar os serviços APLICATIVO FALA CAMPO GRANDE para qualquer finalidade ilegal ou não autorizada.</p>
+                            <p class="paragrafo-termo">5.7 Você e único responsável por sua conduta e por quaisquer dados, textos, imagens, informações, nomes, fotos e outros conteúdos ou materiais que enviar por meio do APLICATIVO FALA CAMPO GRANDE.</p>
+                            <p class="paragrafo-termo">5.8 Você não deve interferir, comprometer ou interromper o serviço, ou os servidores ou redes conectadas ao servo, inclusive por meio da transmissão de qualquer malware, worm, vírus, spyware, ou qualquer outro código de natureza destrutiva ou perturbadora. Você não pode inserir conteúdos ou códigos, ou, de outra forma, alterar, ou interferir na maneira como a página do serviço e exibida ou processada no dispositivo de um usuário.</p>
+                            <p class="paragrafo-termo">5.9 Tendo em vista que o aplicativo lida com informações pessoais, você concorda que não usara robôs, sistemas de varredura e armazenamento de dados (como “spiders” ou “scraperes”), links escondidos ou qualquer outro recurso escuso, ferramenta, programa, algoritmo ou método coletor/extrator de dados automático para acessar, adquirir, copiar ou monitorar o APLICATIVO FALA CAMPO GRANDE, sem permissão expressa por escrito da PMCG.</p>
+                            <p class="paragrafo-termo">5.10 Caso o usuário descumpra os Termos de Uso ou a Política de Privacidade, ou seja, investigado em razão de má conduta, a PMCG poderá restringir seu acesso. O usuário também deverá responder legalmente. Em ambos os casos, o usuário será notificado.</p>
+                            
+                            <p class="paragrafo-termo"><b>6. RESPONSABILIDADES DOS GESTORES DA PLATAFORMA</b></p>
+                            <p class="paragrafo-termo">6.1 Este aplicativo é oferecido pela PMCG e colaboradores da forma como está disponível na loja. Estes não fornecem quaisquer garantias, expressas ou tácitas, ou, ainda, garantias implícitas de comercialização e adequação a interesses específicos.</p>
+                            <p class="paragrafo-termo">6.2 Em hipótese alguma, a PMCG e seus colaboradores responsabilizam-se por eventuais danos diretos, indiretos, emergente, especiais, imprevistos ou multas, causados, em qualquer matéria de responsabilidade, seja contratual, objetiva ou civil (inclusive negligencia ou outras), decorrentes de qualquer forma de uso deste aplicativo, mesmo que advertida a possibilidade de tais danos.</p>
+                            <p class="paragrafo-termo">6.3 O prazo para a resposta ao solicitante sempre até o próximo dia útil subsequente a requisição do usuário.</p>
+                            <p class="paragrafo-termo">6.4 A Política de Privacidade do Aplicativo de APLICATIVO FALA CAMPO GRANDE inclui assegurar que seus dados pessoais não serão divulgados a terceiros para fins comerciais, ficando restritos a PMCG e a empresas contratadas para as quais dados serão encaminhados exclusivamente para a realização do serviço solicitado e melhoramento do aplicativo.</p>
+                            
+                            <p class="paragrafo-termo"><b>7. MUDANÇAS NA PLATAFORMA</b></p>
+                            <p class="paragrafo-termo">7.1 A melhoria continua na prestação dos nossos serviços é uma preocupação da PMCG. Por isso, trabalhamos para oferecer ao usuário um sistema cada vez mais seguro, interativo e atrativo. Por vezes, isso poderá resultar na inclusão ou na remoção de funcionalidades no aplicativo, alteração do conteúdo, ou, ainda, na criação de novos limites aos serviços, o que poderá modificar a forma de interação do usuário. A PMCG avisara os usuários previamente, por meio de envio de alertas ou avisos.</p>
+                            <p class="paragrafo-termo">7.2 Os suportes técnicos do aplicativo ocorrerão a medida que eventuais falhas no serviço forem detectadas pelos programadores.</p>
+                            <p class="paragrafo-termo">7.3 Haverá o incentivo a utilização e detecção de problemas pelos usuários, por meio de disponibilização de espaços específicos para sugestões, críticas e elogios, o “avalie APLICATIVO FALA CAMPO GRANDE”.</p>
+                        </ons-list-item>
+                    </ons-list>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- TERMO DE USO --------------------------------------->
+    <!--------------------------------------- HOME --------------------------------------->
+    <ons-template id="home.html" >
+        <ons-page id="home" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Fala Campo Grande</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html');btnProconVisible();">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <div id="app-header">
+                <img src="images/fala_cg_horizontal.png">
+            </div>
+            <div class="main-wrapper" id="home-nav">
+                <ons-row>
+                    <ons-col width="50%">
+                        <a class="area-icon" id="btnSaude">
+                            <i class="fa fa-user-md"></i>
+                            <p>SAÚDE</p>
+                        </a>
+                    </ons-col>
+                    <ons-col width="50%">
+                        <a class="area-icon" id="btnEducacao">
+                            <i class="fa fa-graduation-cap"></i>
+                            <p>EDUCAÇÃO</p>
+                        </a>
+                    </ons-col>
+                </ons-row>
+                <ons-row>
+                    <ons-col width="50%">
+                        <a class="area-icon" id="btnObraServico">
+                            <i class="fa icon-worker"></i>
+                            <p>OBRAS E SERVIÇOS</p>
+                        </a>
+                    </ons-col>
+                    <ons-col width="50%">
+                        <a class="area-icon" id="btnDefesaSocial">
+                            <i class="fa icon-cap"></i>
+                            <p>DEFESA SOCIAL</p>
+                        </a>
+                    </ons-col>
+                </ons-row>
+                <ons-row>
+                    <ons-col width="50%">
+                        <a class="area-icon" id="btnTransporteColetivo">
+                            <i class="fa fa-bus"></i>
+                            <p>TRANSPORTE COLETIVO</p>
+                        </a>
+                    </ons-col>
+                    <ons-col width="50%">
+                        <a class="area-icon" id="btnOuvidoria">
+                            <i class="fa fa-volume-control-phone"></i>
+                            <p>OUVIDORIA</p>
+                        </a>
+                    </ons-col>
+                </ons-row>
+                <ons-row>
+                    <ons-col width="50%">
+                        <a class="area-icon" onclick="window.open(encodeURI('http://transparencia.campogrande.ms.gov.br'), '_system', 'location=no');">
+                            <i class="fa fa-search"></i>
+                            <p>TRANSPARÊNCIA</p>
+                        </a>
+                    </ons-col>
+                     <ons-col width="50%" >
+                        
+                        <a class="area-icon"  id="btnProcon" style="color:#FFFF;">
+                            <i class="fa icon-procon"></i>
+                            <p>PROCON</p>
+                        </a>
+                    </ons-col>
+                </ons-row>
+                <ons-row>
+                <!--
+                <ons-col width="50%">
+                    <a class="area-icon" data-template="ouvidoria" id="btnParticipaCG">
+                        <i class="fa icon-participa"></i>
+                        <p>PARTICIPA CG</p>
+                    </a>
+                </ons-col>
+                -->
+                <ons-col width="50%">
+                    <a class="area-icon" data-template="ouvidoria" id="btnPortalCidadao"
+                    onclick="window.open(encodeURI('https://cidadao.campogrande.ms.gov.br'), '_system', 'location=no');">
+                        <i class="fa icon-portal" /></i>
+                        <p>PORTAL DO CIDADÃO</p>
+                    </a>
+                </ons-col>
+            </ons-row>
+
+            </div>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- HOME --------------------------------------->
+    <!--------------------------------------- OUVIDORIA --------------------------------------->
+    <ons-template id="ouvidoria.html">
+        <ons-page id="ouvidoria" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Ouvidoria</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header center">
+                        <i class="fa fa-volume-control-phone avatar"></i>
+                        <h3 style="margin-bottom: 0;"><strong id="sNomeOuvidoria"></strong></h3>
+                        <h4 style="margin-top: 10px; margin-bottom: 0;" id="ramallOuvidoriaGeral"></h4>
+                        <h4 style="margin-top: 10px; margin-bottom: 10px;" id="htelOuvidoriaGeral"></h4>
+                        <small id="sEmailOuvidoriaGeral"></small>
+                        <h3 id="hOutrosTelefones"></h3>
+                        <div id="divOutrosTelefones"></div>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- OUVIDORIA --------------------------------------->
+    <!--------------------------------------- EDUCAÇÃO --------------------------------------->
+    <ons-template id="educacao.html">
+        <ons-page id="educacao" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Educação</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper"> 
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3><i class="fa fa-book"></i> Nova Solicitação<br><small>Selecione abaixo um dos itens.</small></h3>
+                    </div>
+                    <div id="divTipoEducacao"></div>
+                    <!--<ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Solicitações Disponíveis</ons-list-header>
+                        <ons-list-item onclick="fn.novaSolicitacao('Educação|Alimentação', '100', '2');" tappable><i class="fa fa-check"></i>&nbsp;Alimentação</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Educação|Assédio Moral', '101', '2');" tappable><i class="fa fa-check"></i>&nbsp;Assédio Moral</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Educação|Atendimento', '102', '2');" tappable><i class="fa fa-check"></i>&nbsp;Atendimento</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Educação|Instalações', '103', '2');" tappable><i class="fa fa-check"></i>&nbsp;Instalações</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Educação|Material Escolar', '104', '2');" tappable><i class="fa fa-check"></i>&nbsp;Material Escolar</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Educação|Matrículas/Vagas', '106', '2');" tappable><i class="fa fa-check"></i>&nbsp;Matrículas/Vagas</ons-list-item>
+                    </ons-list>-->
+                </ons-col>
+            </ons-row>
+            <ons-row style="padding-left: 20px; padding-right: 20px; margin-bottom: 20px;">
+                <ons-col>
+                    <small><a href="#" style="font-weight: bold;" onclick="window.open(encodeURI('http://www.campogrande.ms.gov.br/semed'), '_system', 'location=no');">SEMED - Secretaria Municipal de Educação</a></small>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- EDUCAÇÃO --------------------------------------->
+    <!--------------------------------------- OBRAS E SERVIÇOS --------------------------------------->
+    <ons-template id="obras-servicos.html">
+        <ons-page id="obras-servicos" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Obras e Serviços</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3><i class="fa fa-book"></i> Nova Solicitação<br><small>Selecione abaixo um dos itens.</small></h3>
+                    </div>
+                    <div id="divTipoObrasServicos"></div>
+                    <!--<ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Solicitações Disponíveis</ons-list-header>
+                        <ons-list-item onclick="fn.novaSolicitacao('Obras e Serviços|Coleta de Lixo', '107', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Coleta de Lixo</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Obras e Serviços|Combate a Dengue', '23', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Combate a Dengue</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Obras e Serviços|Drenagem / Boca de Lobo', '65', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Drenagem / Boca de Lobo</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Obras e Serviços|Iluminação Pública', '1', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Iluminação Pública</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Obras e Serviços|Poda de Árvore', '13', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Poda de Árvore</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Obras e Serviços|Remoção de Entulhos', '108', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Remoção de Entulhos</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Obras e Serviços|Tapa Buraco', '63', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Tapa Buraco</ons-list-item>
+                    </ons-list>-->
+                </ons-col>
+            </ons-row>
+            <ons-row>
+                <ons-col style="margin-bottom: 10px;">
+                    <small style="margin-left: 19px;"><i class="fa fa-clock-o" style="color: #085394"></i>&nbsp;<a href="#" style="font-weight: bold;" onclick="document.querySelector('#myNavigator').pushPage('tempo-atendimento.html');">Tempo de Atendimento</a></small>
+                </ons-col>
+            </ons-row>
+            <ons-row style="padding-left: 20px; padding-right: 20px; margin-bottom: 20px;">
+                <ons-col>
+                    <small><a href="#" style="font-weight: bold; font-size: 100%;" onclick="window.open(encodeURI('http://www.campogrande.ms.gov.br/sisep'), '_system', 'location=no');">SISEP - Secretaria Municipal de Infraestrutura e Serviços Públicos</a></small>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- OBRAS E SERVIÇOS --------------------------------------->
+    <!--------------------------------------- TEMPO DE ATENDIMENTO --------------------------------------->
+    <ons-template id="tempo-atendimento.html">
+        <ons-page id="tempo-atendimento" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Tempo de Atendimento</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col> 
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-item modifier='nodivider'>
+                            <p class="paragrafo-termo">Os serviços solicitados serão encaminhados imediatamente aos setores responsáveis e serão executados conforme as nossas possibilidades.</p>
+                        </ons-list-item>
+                        <ons-list-item modifier='nodivider' style="font-size: 80%;">
+                            <p>Ouvidoria Geral <br />(67) 3314 - 4639 <br />ouvidoriageral@cgm.campogrande.ms.gov.br</p>
+                        </ons-list-item>
+                    </ons-list>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- TEMPO DE ATENDIMENTO --------------------------------------->
+    <!--------------------------------------- DEFESA SOCIAL --------------------------------------->
+    <ons-template id="defesa-social.html">
+        <ons-page id="defesa-social" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Defesa Social</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3><i class="fa fa-book"></i> Nova Solicitação<br><small>Selecione abaixo um dos itens.</small></h3>
+                    </div>
+                    <div id="divTipoDefesaSocial"></div>
+                    <!--<ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Solicitações Disponíveis</ons-list-header>
+                        <ons-list-item onclick="fn.novaSolicitacao('Defesa Social|Ronda', '135', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Ronda</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Defesa Social|Patrulhamento', '136', '1', true);" tappable><i class="fa fa-check"></i>&nbsp;Patrulhamento</ons-list-item>
+                    </ons-list>-->
+                </ons-col>
+            </ons-row>
+            <ons-row style="padding-left: 20px; padding-right: 20px; margin-bottom: 20px;">
+                <ons-col>
+                    <small><a href="#" style="font-weight: bold; font-size: 100%;" onclick="window.open(encodeURI('http://www.campogrande.ms.gov.br/sesde'), '_system', 'location=no');">SESDE - Secretaria Especial de Segurança e Defesa Social</a></small>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- DEFESA SOCIAL --------------------------------------->
+    <!--------------------------------------- SAÚDE --------------------------------------->
+    <ons-template id="saude.html">
+        <ons-page id="saude" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Saúde</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3><i class="fa fa-book"></i> Nova Solicitação<br><small>Selecione abaixo um dos itens.</small></h3>
+                    </div>
+                    <div id="divTipoSaude"></div>
+                    <!--<ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Solicitações Disponíveis</ons-list-header>
+                        <ons-list-item onclick="fn.novaSolicitacao('Saúde|Atendimento', '102', '2');" tappable><i class="fa fa-check"></i>&nbsp;Atendimento</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Saúde|Exames', '109', '2');" tappable><i class="fa fa-check"></i>&nbsp;Exames</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Saúde|Instalações', '103', '2');" tappable><i class="fa fa-check"></i>&nbsp;Instalações</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Saúde|Medicamentos', '110', '2');" tappable><i class="fa fa-check"></i>&nbsp;Medicamentos</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Saúde|Vagas', '111', '2');" tappable><i class="fa fa-check"></i>&nbsp;Vagas</ons-list-item>
+                    </ons-list>-->
+                </ons-col>
+            </ons-row>
+            <ons-row>
+                <ons-col>
+                    <small style="margin-left: 10px;"><img src="images/IconeCartaServico.png" style="width: 10%; vertical-align: bottom;" /><a href="#" style="font-weight: bold;" onclick="window.open(encodeURI('http://portal.capital.ms.gov.br/cartadeservicos'), '_system', 'location=no');">Carta de Serviços de Saúde</a></small>
+                </ons-col>
+            </ons-row>
+            <ons-row style="padding-left: 20px; margin-bottom: 20px; margin-top: 20px;">
+                <ons-col>
+                    <small><a href="#" style="font-weight: bold;" onclick="window.open(encodeURI('http://www.campogrande.ms.gov.br/sesau'), '_system', 'location=no');">SESAU - Secretaria Municipal de Saúde Pública</a></small>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- SAÚDE --------------------------------------->
+    <!--------------------------------------- TRANSPORTE COLETIVO --------------------------------------->
+    <ons-template id="transporte-coletivo.html">
+        <ons-page id="transporte-coletivo" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Transporte Coletivo</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3><i class="fa fa-book"></i> Nova Solicitação<br><small>Selecione abaixo um dos itens.</small></h3>
+                    </div>
+                    <div id="divTipoTransporte"></div> 
+                    <!--<ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Solicitações Disponíveis</ons-list-header>
+                        <ons-list-item onclick="fn.novaSolicitacao('Transporte Coletivo|Acessibilidade', '112', '2');" tappable><i class="fa fa-check"></i>&nbsp;Acessibilidade</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Transporte Coletivo|Assédio Moral', '101', '2');" tappable><i class="fa fa-check"></i>&nbsp;Assédio Moral</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Transporte Coletivo|Condição da Frota', '113', '2');" tappable><i class="fa fa-check"></i>&nbsp;Condição da Frota</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Transporte Coletivo|Pontos de Ônibus', '114', '2');" tappable><i class="fa fa-check"></i>&nbsp;Pontos de Ônibus</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Transporte Coletivo|Pontualidade', '115', '2');" tappable><i class="fa fa-check"></i>&nbsp;Pontualidade</ons-list-item>
+                        <ons-list-item onclick="fn.novaSolicitacao('Transporte Coletivo|Terminais', '114', '2');" tappable><i class="fa fa-check"></i>&nbsp;Terminais</ons-list-item>
+                    </ons-list>-->
+                </ons-col>
+            </ons-row>
+            <ons-row style="padding-left: 20px; padding-right: 20px; margin-bottom: 20px;">
+                <ons-col>
+                    <small><a href="#" style="font-weight: bold; font-size: 100%;" onclick="window.open(encodeURI('http://agetran.ms.gov.br/agetran'), '_system', 'location=no');">AGETRAN - Agência Municipal de Transporte e Trânsito</a></small>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- TRANSPORTE COLETIVO --------------------------------------->
+    <!--------------------------------------- NOVA SOLICITAÇÃO --------------------------------------->
+    <ons-template id="nova-solicitacao.html">
+        <ons-page id="nova-solicitacao" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title-solicitacao"></div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <input type="hidden" id="idservico"/>
+                <input type="hidden" id="tiposervico" />
+                <ons-col>
+                
+                    <div class="gesol-area-header">
+                        <h3><i class="fa fa-edit"></i> Nova Solicitação<br><small>Preencha o formulário abaixo.</small></h3>
+                    </div>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-item modifier="nodivider" id="itemDenuncia" tappable> 
+                            <label class="left">
+                                <ons-input name="tipo-solicitacao" type="radio" input-id="radio-1" value="1"></ons-input>
+                            </label>
+                            <label for="radio-1" class="center">
+                                Denúncia
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" id="itemElogio" tappable>
+                            <label class="left">
+                                <ons-input name="tipo-solicitacao" type="radio" input-id="radio-2" value="2"></ons-input>
+                            </label>
+                            <label for="radio-2" class="center">
+                                Elogio
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" id="itemReclamacao" tappable>
+                            <label class="left">
+                                <ons-input name="tipo-solicitacao" type="radio" input-id="radio-3" value="3"></ons-input>
+                            </label>
+                            <label for="radio-3" class="center">
+                                Reclamação
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" id="itemServico" tappable>
+                            <label class="left">
+                                <ons-input name="tipo-solicitacao" type="radio" input-id="radio-4" value="S"></ons-input>
+                            </label>
+                            <label for="radio-4" class="center">
+                                Serviço
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <textarea id="detalhes" class="textarea" placeholder="DETALHES" style="width: 97%; height: 90px; background: #f7fbff"></textarea>
+                        </ons-list-item>
+                        <center id="divFoto" style="display: none;">
+                            <p style="margin: 0; padding-top: 15px; padding-bottom: 15px;">
+                                <ons-button id="btnNovaFoto" onclick="capturePhoto();"><i class="fa fa-camera"></i>&nbsp;&nbsp;ADICIONAR FOTO</ons-button>
+                                <img id="imagem" onclick="capturePhoto()" style="display: none; width: 50%;" />
+                            </p>
+                        </center>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" id="solicitar" onclick="selecionarEnviar();">FAZER SOLICITAÇÃO</ons-button>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- NOVA SOLICITAÇÃO --------------------------------------->
+     <!--------------------------------------- MENU PROCON --------------------------------------->
+    <ons-template id="procon.html">
+        <ons-page id="procon" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Procon</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-button modifier="large" class="top30" onclick="fn.load('termo-denuncia.html')">Denúncia</ons-button>
+                    <ons-button modifier="large" class="top30" onclick="fn.load('termo-orientacao.html')">Orientação</ons-button>
+                    <ons-button modifier="large" class="top30" onclick="fn.load('termo-informacao.html')">Informações ao Consumidor</ons-button>
+                    <ons-button modifier="large" class="top30" onclick="fn.load('contato-procon.html')">Contato</ons-button>
+                </ons-col>
+            </ons-row>
+            <ons-row>
+                <ons-col width="90%" style="margin-top:5em !important;margin:0 auto;">
+                        <a class="face-icon"  onclick="window.open(encodeURI('https://www.facebook.com/proconcg/'), '_system', 'location=no');">
+                            <i class="fa fa-facebook"></i>
+                         </a> 
+                         <a style="font-size:0.8em !important;margin-top:1.1em!important;margin-left:5px!important;float:left !important"  onclick="window.open(encodeURI('https://www.facebook.com/proconcg/'), '_system', 'location=no');">
+                            PROCON CAMPO GRANDE MS
+                         </a>    
+                              
+                            
+                        
+                    </ons-col>
+            </ons-row>
+        </ons-page> 
+    </ons-template>
+    <!--------------------------------------- MENU PROCON --------------------------------------->
+    <!--------------------------------------- TERMO DENÚNCIA PROCON --------------------------------------->
+    <ons-template id="termo-denuncia.html">
+        <ons-page id="termo-denuncia" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Denúncia</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol"><!--style="padding-bottom: 30px; padding-top: 30px"--> 
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <div id="termoden">
+                            </div>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="fn.load('denuncias-procon.html');">CONCORDO</ons-button>
+                </ons-col>
+            </ons-row>
+            
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- TERMO DENÚNCIA PROCON --------------------------------------->
+     <!--------------------------------------- TERMO ORIENTAÇÃO PROCON --------------------------------------->
+    <ons-template id="termo-orientacao.html">
+        <ons-page id="termo-orientacao" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Denúncia</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol"><!--style="padding-bottom: 30px; padding-top: 30px"--> 
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <div id="termoori">
+                            </div>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="fn.load('orientacoes-procon.html');">CONCORDO</ons-button>
+                </ons-col>
+            </ons-row>
+            
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- TERMO ORIENTAÇÃO PROCON --------------------------------------->
+     <!--------------------------------------- TERMO ORIENTAÇÃO INFORMAÇÃO --------------------------------------->
+    <ons-template id="termo-informacao.html">
+        <ons-page id="termo-informacao" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Denúncia</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol"><!--style="padding-bottom: 30px; padding-top: 30px"--> 
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <div id="termoinfo">
+                            </div>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="fn.load('informacoes-consumidor-procon.html');">CONCORDO</ons-button>
+                </ons-col>
+            </ons-row>
+            
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- TERMO ORIENTAÇÃO INFORMAÇÃO --------------------------------------->
+    <!--------------------------------------- DENÚNCIA PROCON --------------------------------------->
+    <ons-template id="denuncias-procon.html">
+        <ons-page id="denuncias-procon" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Denúncia</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>  
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                 <div class="gesol-area-header">
+                    <h3><i class="fa fa-book"></i> Nova Solicitação<br><small>Preencha as informações abaixo.</small></h3>
+                 </div>
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol"><!--style="padding-bottom: 30px; padding-top: 30px"--> 
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                             <input type="hidden" placeholder="Denúncia / Orientação" id="tipden" 
+                           name="tipden" style="width:97%" value="0" float>
+                            <textarea id="desden"  placeholder="Ocorrência" style="width: 97%"
+                            rows="5" float></textarea>
+                        </ons-list-item>
+                       <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                           <input type="text"  placeholder="Local da Ocorrência" id="estden" name="estden" style="width:97%;height:35px;" float>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                           <input type="search" class="search-input" placeholder="Endereço da Ocorrência" id="endereco" 
+                           name="endereco" style="width:97%;height:35px;" float onkeyup="obterEndereco()">
+                           <div id="listEnd"></div>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                           <input type="number" class="" placeholder="Número" id="numero" name="numero" style="width:97%;height:35px;" float>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                           <input type="hidden" placeholder="Código do Ramo de Atividade" id="codram" 
+                                    name="codram" style="width:97%" value="" float>
+                            <input type="search" class="search-input" placeholder="Ramo de Atividade" id="nomram" 
+                                onclick="getRamoAtividade()" name="nomram" style="width:98%; height:40px;" value="" float>
+                            <div id="listRam" style="width:98%"></div>
+                        </ons-list-item>
+
+                        <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                           <input type="file"   id="arqsta" name="arqsta" style="width:97%" float>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="solicitarOrientacao();">ENVIAR</ons-button>
+                </ons-col>
+            </ons-row>
+            
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- DENÚNCIA PROCON --------------------------------------->
+    <!--------------------------------------- ORIENTACAO PROCON --------------------------------------->
+    <ons-template id="orientacoes-procon.html">
+        <ons-page id="orientacoes-procon" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Orientação</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <div class="gesol-area-header">
+                    <h3><i class="fa fa-book"></i> Nova Solicitação<br><small>Preencha as informações abaixo.</small></h3>
+                </div>
+               <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol"><!--style="padding-bottom: 30px; padding-top: 30px"--> 
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <input type="hidden" placeholder="Denúncia / Orientação" id="tipden" 
+                           name="tipden" style="width:97%" value="1" float>
+                            <textarea id="desden"  name="desden" placeholder="Descreva sua Dúvida" style="width: 97%"
+                            rows="7" float></textarea>
+                        </ons-list-item>
+                       <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                           <input type="hidden" placeholder="Código do Ramo de Atividade" id="codram" 
+                                    name="codram" style="width:97%" value="" float>
+                            <input type="search" class="search-input" placeholder="Ramo de Atividade" id="nomram" 
+                                onclick="getRamoAtividade()" name="nomram" style="width:98%; height:40px;" value="" float>
+                            <div id="listRam" style="width:98%"></div>
+                        </ons-list-item>
+
+                        <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                           
+                           <input type="file"   id="arqsta" name="arqsta" style="width:97%" float>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="solicitarOrientacao();">ENVIAR</ons-button>
+                </ons-col>
+            </ons-row>           
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- ORIENTACAO PROCON --------------------------------------->
+    <!--------------------------------------- MINHAS SOLICITAÇÕES PROCON--------------------------------------->
+    <ons-template id="solicitacoes-procon.html">
+        <ons-page id="solicitacoes-procon" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Meus Protocolos</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3>
+                            <i class="ion-clipboard"></i> Meus Protocolos - PROCON<br>
+                            <small>Toque para acompanhar.</small>
+                        </h3>
+                    </div>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-header>Protocolos</ons-list-header>
+                    </ons-list>
+                    <div id="divSolicitacoesProcon"></div>                    
+                </ons-col>
+            </ons-row>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol" style="font-size: 90%">
+                        <ons-list-header style="height:30px !important; padding-top:5px; padding-bottom:3px;">
+                            <span style=" float:left;">
+                                Legenda
+                            </span>
+                            <span onclick="fn.load('details.html')" style="float:right" tappable>
+                                <ons-icon icon="information-circle-outline">
+                                </ons-icon>&nbsp;
+                                Detalhes  
+                            </span>
+                        </ons-list-header>
+                        <ons-list-item>
+                            <p style="margin: 5px; padding-left: 12px;">
+                                <img src='./images/aberta.png' style='width: 7%; vertical-align: middle;' /><span style="margin-right: 47px;">&nbsp;Aberta</span>
+                                <img src='./images/gerenciada.png' style='width: 7%; vertical-align: middle;' /><span>&nbsp;Em Análise</span>
+                            </p>
+                            <p style="margin: 5px; padding-left: 12px;">
+                                <img src='./images/finalizada.png' style='width: 7%; vertical-align: middle;' /><span style="margin-right: 23px;">&nbsp;Finalizada</span>
+                                <img src='./images/concluida.png' style='width: 7%; vertical-align: middle;' /><span>&nbsp;Concluída</span>
+                            </p>
+                        </ons-list-item>    
+                    </ons-list>
+                </ons-col>
+            </ons-row>
+            <ons-row class="main-wrapper" style="padding-top: 0px;">
+                <ons-col>
+                    <div class="gesol-area-header">
+                        <h3 style="margin-top: 0px;">
+                            <small>Obrigado por contribuir e ajudar a melhorar a nossa cidade!</small>
+                        </h3>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- MINHAS SOLICITAÇÕES PROCON --------------------------------------->
+    
+     <!--------------------------------------- CONTATO PROCON --------------------------------------->
+    <ons-template id="contato-procon.html">
+        <ons-page id="contato-procon" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Contato</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+               <div class="gesol-area-header" style="width:95%;">
+                   <h3>Atendimento PROCON</h3>
+                   <h4>Endereço</h4>
+                    <div id="divEnderecoProcon"></div>   
+                   <h4>Canais de Comunicação</h4> 
+                    <div id="divContatoProcon" style="width:100%;" ></div>  
+                </div>
+                
+            </ons-row>
+            
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- CONTATO PROCON --------------------------------------->
+
+
+     <!--------------------------------------- INFORMACOES AO CONSUMIDOR PROCON --------------------------------------->
+    <ons-template id="informacoes-consumidor-procon.html">
+        <ons-page id="informacoes-consumidor-procon" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Informativo</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+               <div class="gesol-area-header">
+                   <h3>PROCON Informativo</h3>
+                    <div >
+                        <p style="text-align: left;">
+                            Deseja se cadastrar para receber via aplicativo WhatsApp notícias de 
+                            cunho informativo, afetos ao direito do consumidor ?
+                        </p>
+                        <ons-button id="realizaInscricao" modifier="large" class="top30" onclick="cadastrarNoInformativoProcon()">Sim, desejo me cadastrar !</ons-button>
+                        <ons-button id="cancelaInscricao" style="background-color: #D9802D" modifier="large" class="top30" onclick="cancelarInscricaoNoInformativoProcon()">Cancelar minha inscrição </ons-button>                        
+                    </div>  
+                </div>
+                
+            </ons-row>
+            
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- INFORMACOES AO CONSUMIDOR PROCON --------------------------------------->
+    <!--------------------------------------- OBRIGADO PROCON --------------------------------------->
+    <ons-template id="obrigado2.html">
+        <ons-page id="obrigado2" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Obrigado!</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">0</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <div id="app-header" class="thanks">
+                <img src="images/logo.png">
+            </div>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header text-center">
+                        <!--<h3><i class="fa fa-user"></i> OBRIGADO!<br><small>Sua solicitação foi recebida.</small></h3>-->
+                        <h3><small>Obrigado por colaborar com a melhoria da nossa cidade!</small></h3>
+                        <p><ons-button modifier="large" onclick="fn.load('solicitacoes-procon.html')">ACOMPANHAR</ons-button></p>
+                        <p><ons-button modifier="large" onclick="fn.load('home.html')">NOVA SOLICITAÇÃO</ons-button></p>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- OBRIGADO PROCON --------------------------------------->
+    <!--------------------------------------- OBRIGADO --------------------------------------->
+    <ons-template id="obrigado.html">
+        <ons-page id="obrigado" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Obrigado!</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">0</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <div id="app-header" class="thanks">
+                <img src="images/logo.png">
+            </div>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header text-center">
+                        <!--<h3><i class="fa fa-user"></i> OBRIGADO!<br><small>Sua solicitação foi recebida.</small></h3>-->
+                        <h3><small>Obrigado por colaborar com a melhoria da nossa cidade!</small></h3>
+                        <p><ons-button modifier="large" onclick="fn.load('minhas-solicitacoes-2.html')">ACOMPANHAR</ons-button></p>
+                        <p><ons-button modifier="large" onclick="fn.load('home.html')">NOVA SOLICITAÇÃO</ons-button></p>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- OBRIGADO --------------------------------------->
+    <!--------------------------------------- OBRIGADO SEM ACOMPANHAR --------------------------------------->
+    <ons-template id="obrigado-sem-acompanhar.html">
+        <ons-page id="obrigado-sem-acompanhar" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Obrigado!</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <div id="app-header" class="thanks">
+                <img src="images/logo.png">
+            </div>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header text-center">
+                        <!--<h3><i class="fa fa-user"></i> OBRIGADO!<br><small>Sua solicitação foi recebida.</small></h3>-->
+                        <h3><small>Obrigado por colaborar com a melhoria da nossa cidade!</small></h3>
+                        <p><ons-button modifier="large" onclick="fn.load('home.html')">NOVA SOLICITAÇÃO</ons-button></p>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- OBRIGADO SEM ACOMPANHAR --------------------------------------->
+    <!--------------------------------------- OUTROS SERVIÇOS --------------------------------------->
+    <ons-template id="outros-servicos.html">
+        <ons-page id="outros-servicos">
+            <ons-toolbar>
+                <div class="left"><ons-back-button>Voltar</ons-back-button></div>
+                <div class="center"><i class="fa fa-comments"></i>&nbsp;&nbsp;Fala Campo Grande</div>
+            </ons-toolbar>
+            <p style="font-weight: bold">
+                <span style="margin-left: 10px; text-align: center"><i class="fa fa-wrench"></i>&nbsp;Obras e Serviços</span>
+            </p>
+            <p style="text-align: center">
+                <span style="margin-left: 10px; text-align: center"><i class="fa fa-plus-circle"></i>&nbsp;Outros Serviços</span>
+            </p>
+            <p style="margin-left: 10px; font-weight: bold; text-decoration: underline;">Fale Conosco</p>
+            <p style="margin-left: 25px;">
+                <span>(67) 3316-0001</span>
+            </p>
+            <p style="margin-left: 25px;">
+                <span>0800 246 2002</span>
+            </p>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- OUTROS SERVIÇOS --------------------------------------->
+    <!--------------------------------------- PERFIL --------------------------------------->
+    <ons-template id="perfil.html">
+        <ons-page id="perfil" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="left" id="toolbar-title">Perfil de Usuário</div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.load('minhas-notificacoes.html')">
+                        <ons-icon class="font-size-19" icon="fa-bell-o"></ons-icon>
+                    </ons-toolbar-button>
+                    <span id="spanTopoQtdeNotificacoes" class="badge badge-notify">3</span>
+                    <ons-toolbar-button onclick="fn.load('home.html')">
+                        <ons-icon icon="fa-home"></ons-icon>
+                    </ons-toolbar-button>
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row class="profile-wrapper">
+                <!--content-->
+                <ons-col>
+                    <ons-row>
+                        <ons-col class="user-welcoming">
+                            <h3>Olá <strong id="nomeOla"></strong>!</h3>
+                        </ons-col>
+                    </ons-row>
+                    <ons-row class="user-avatar">
+                        <ons-col><img src="images/profile-default.png" class="avatar"></ons-col>
+                    </ons-row>
+                    <ons-row class="user-info">
+                        <ons-col>
+                            <ons-list> 
+                                <ons-list-header><ons-icon icon="user"></ons-icon>&nbsp;Nome</ons-list-header>
+                                <ons-list-item><div class="center list-item__center list-item--material__center" id="nomePerfil"></div></ons-list-item>
+                                <ons-list-header><ons-icon icon="envelope"></ons-icon>&nbsp;E-mail</ons-list-header>
+                                <ons-list-item><div class="center list-item__center list-item--material__center" id="emailPerfil"></div></ons-list-item>
+                                <ons-list-header><ons-icon icon="lock"></ons-icon>&nbsp;Senha</ons-list-header>
+                                <ons-list-item>*******</ons-list-item>
+                                <ons-list-header><ons-icon icon="credit-card"></ons-icon>&nbsp;CPF</ons-list-header>
+                                <ons-list-item><div class="center list-item__center list-item--material__center" id="cpfPerfil"></div></ons-list-item>
+                            </ons-list>
+                        </ons-col>
+                    </ons-row>
+                    <ons-row class="top30">
+                        <ons-col>
+                            <ons-button modifier="large" class="center" onclick="document.querySelector('#myNavigator').pushPage('alterar-senha.html');">ALTERAR SENHA</ons-button>
+                        </ons-col>
+                    </ons-row>
+                </ons-col>
+                <!--/content-->
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- PERFIL --------------------------------------->
+    <!--------------------------------------- ALTERAR SENHA --------------------------------------->
+    <ons-template id="alterar-senha.html">
+        <ons-page id="alterar-senha" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="center" id="toolbar-title" style="text-align: center">Alterar Senha</div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper"> 
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <ons-input id="senhaatual" type="password" placeholder="Senha Atual" style="width: 85%" float></ons-input>
+                            &nbsp;&nbsp;<i id="olhoAtual" class="fa fa-eye fa-2"></i>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="novasenha" type="password" placeholder="Nova Senha" style="width: 85%" float></ons-input>
+                            &nbsp;&nbsp;<i id="olhoNova" class="fa fa-eye fa-2"></i>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                            <ons-input id="confnovasenha" type="password" placeholder="Confirmar Nova Senha" style="width: 85%" float></ons-input>
+                            &nbsp;&nbsp;<i id="olhoNovaConf" class="fa fa-eye fa-2"></i>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="alterarsenha();">ALTERAR</ons-button>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- ALTERAR SENHA --------------------------------------->
+    <!--------------------------------------- CADASTRAR USUÁRIO --------------------------------------->
+    <ons-template id="cadastrar-usuario.html">
+        <ons-page id="cadastrar-usuario" modifier="gesol"> 
+            <ons-toolbar modifier="gesol">
+                <div class="center" id="toolbar-title" style="text-align: center">Cadastrar Usuário</div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper" style="padding-bottom: 0">
+                <ons-col>
+                    <div class="gesol-area-header text-justify font-size-80">
+                        <h3 style="margin: 0">
+                            <small>Esse cadastro é obrigatório e deve ser realizado uma única vez. Preencha corretamente os seus dados e anote a sua senha.</small>
+                        </h3>
+                    </div>
+                </ons-col>
+            </ons-row>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol" style="background-color: #e9f5f9 !important;">
+                        <ons-list-item modifier="nodivider">
+                            <small>
+                                <b>Informações Pessoais</b>
+                            </small>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="nome" placeholder="Nome" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="datanascimento" type="tel" readonly="readonly" placeholder="Data de Nascimento" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="cpf" type="tel" placeholder="CPF" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <!--<ons-list-item modifier="nodivider">
+                            <ons-input id="telefone" type="tel" placeholder="Telefone" style="width: 97%" float></ons-input>
+                        </ons-list-item>-->
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="celular" type="tel" placeholder="Celular" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="email" type="email" placeholder="E-mail" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="senha" type="password" placeholder="Senha" style="width: 85%" float></ons-input>
+                            &nbsp;&nbsp;<i id="olho" class="fa fa-eye fa-2"></i>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <small>
+                                <b>Endereço</b>
+                            </small>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="logradouro" placeholder="Logradouro" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="numero" type="number" placeholder="Número" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="bairro" placeholder="Bairro" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider">
+                            <ons-input id="cep" type="tel" placeholder="CEP" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="cadastrarusuario();">CADASTRAR</ons-button>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- CADASTRAR USUÁRIO --------------------------------------->
+    <!--------------------------------------- LOGIN --------------------------------------->
+    <ons-template id="login.html">
+        <ons-page id="login" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="center" id="toolbar-title" style="text-align: center">Autenticar Usuário</div>
+                <!--<div class="right">
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>-->
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol"><!--style="padding-bottom: 30px; padding-top: 30px"--> 
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <ons-input id="cpf" type="tel" placeholder="CPF" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" style="padding-bottom: 20px">
+                            <ons-input id="senha" type="password" placeholder="Senha" style="width: 85%" float></ons-input>
+                            &nbsp;&nbsp;<i id="olho" class="fa fa-eye fa-2"></i>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="logar();">ENTRAR</ons-button>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- LOGIN --------------------------------------->
+    <!--------------------------------------- LOGOUT --------------------------------------->
+    <ons-template id="logout.html">
+        <ons-page id="logout" modifier="gesol">
+            <div id="app-header" class="thanks">
+                <img src="images/logo.png">
+            </div>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header text-center">
+                        <h3><i class="fa fa-user"></i> OBRIGADO!<br><small>Você fez logout.</small></h3>
+                        <ons-button modifier="large" onclick="document.querySelector('#myNavigator').pushPage('login.html');">ENTRAR NOVAMENTE</ons-button>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- LOGOUT --------------------------------------->
+    <!--------------------------------------- RECUPERAR SENHA --------------------------------------->
+    <ons-template id="esqueci-minha-senha.html">
+        <ons-page id="esqueci-minha-senha" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="center" id="toolbar-title" style="text-align: center">Recuperar Senha</div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <ons-input id="cpf" type="tel" placeholder="CPF" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" style="padding-top: 20px">
+                            <ons-input id="datanascimento" type="tel" readonly="readonly" placeholder="Data de Nascimento" style="width: 97%" float></ons-input>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="recuperarsenha();">RECUPERAR</ons-button>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- RECUPERAR SENHA --------------------------------------->
+    <!--------------------------------------- SELECIONAR AMBIENTE --------------------------------------->
+    <ons-template id="selecionar-ambiente.html">
+        <ons-page id="selecionar-ambiente" modifier="gesol">
+            <ons-toolbar modifier="gesol">
+                <div class="center" id="toolbar-title" style="text-align: center">Selecionar Ambiente</div>
+            </ons-toolbar>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <ons-list class="gesol-list" modifier="gesol">
+                        <ons-list-item modifier="nodivider" tappable>
+                            <label class="left">
+                                <ons-input name="ambiente" type="radio" input-id="producao" value="P" checked></ons-input>
+                            </label>
+                            <label for="producao" class="center">
+                                Produção
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item modifier="nodivider" tappable>
+                            <label class="left">
+                                <ons-input name="ambiente" type="radio" input-id="homologacao" value="H"></ons-input>
+                            </label>
+                            <label for="homologacao" class="center">
+                                Homologação
+                            </label>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button modifier="large" class="top30" onclick="selecionarAmbiente();">CONFIRMAR</ons-button>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- SELECIONAR AMBIENTE --------------------------------------->
+    <!--------------------------------------- TELA INICIAL --------------------------------------->
+    <ons-template id="tela-inicial.html">
+        <ons-page id="tela-inicial" modifier="gesol">
+            <div id="app-header" class="thanks">
+                <img src="images/logo.png">
+            </div>
+            <ons-row class="main-wrapper">
+                <ons-col>
+                    <div class="gesol-area-header text-center"> 
+                        <p><ons-button style="width: 80%" onclick="document.querySelector('#myNavigator').pushPage('login.html');">Entrar</ons-button></p>
+                        <p><ons-button style="width: 80%" onclick="document.querySelector('#myNavigator').pushPage('cadastrar-usuario.html');">Cadastrar Usuário</ons-button></p>
+                        <p><ons-button style="width: 80%" onclick="document.querySelector('#myNavigator').pushPage('esqueci-minha-senha.html');">Recuperar Senha</ons-button></p>
+                    </div>
+                </ons-col>
+            </ons-row>
+            <ons-row class="footer">
+                <ons-col>
+                    <img src="images/brasao-pmcg.png">
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+    <!--------------------------------------- TELA INICIAL --------------------------------------->
+    <!--------------------------------------- DIALOG SELECIONAR CAMERA OU GALERIA --------------------------------------->
+    <ons-dialog id="dialog-origem-foto">
+        <div style="text-align: center; padding: 10px;">
+            <p>
+                Selecione como deseja adicionar a foto
+            <p>
+            <p>
+                <ons-button modifier="quiet" id="btnCapturarFoto" onclick="capturePhoto(); hideDialog('dialog-origem-foto');">Câmera</ons-button>
+                <ons-button modifier="quiet" id="btnFotoGaleria" onclick="getPhoto(pictureSource.PHOTOLIBRARY); hideDialog('dialog-origem-foto');">Galeria</ons-button>
+            </p>
+        </div>
+    </ons-dialog>
+    <!--------------------------------------- DIALOG SELECIONAR CAMERA OU GALERIA --------------------------------------->
+    <!--------------------------------------- MODAL - AGUARDE --------------------------------------->
+    <ons-modal direction="up">
+        <div style="text-align: center">
+            <p>
+                <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Aguarde...
+            </p>
+        </div>
+    </ons-modal>
+    <!--------------------------------------- MODAL - AGUARDE --------------------------------------->
+     <!--------------------------------------- MODAL - RAMO ATIVIDADE --------------------------------------->
+    <ons-modal direction="center" id="ramoAtividade">
+        <div style="text-align: center">
+            
+            <div id="divRamoAtividade"></div>
+        </div>
+    </ons-modal>
+    <!--------------------------------------- MODAL - RAMO ATIVIDADE --------------------------------------->
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+</body>
+</html>

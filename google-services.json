@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "266229996051",
+    "firebase_url": "https://fala-campo-grande.firebaseio.com",
+    "project_id": "fala-campo-grande",
+    "storage_bucket": "fala-campo-grande.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266229996051:android:aadadd1ee4f260d5",
+        "android_client_info": {
+          "package_name": "io.cordova.myapp004402"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266229996051-i9qcbv2c21vkg9dp5s35c78morni4f5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD35vhFG-U-OgkOgq5YAU0Agv2pjuGRK7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
